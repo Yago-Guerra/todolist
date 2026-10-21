@@ -1,0 +1,47 @@
+Instale Node.js 22 ou superior, PHP 8.4.1 ou superior, Composer e Python 3.10 ou superior. No PHP, as extensões pdo_sqlite e mbstring precisam estar habilitadas.
+
+Abra a pasta do projeto no VS Code e abra um terminal PowerShell nessa pasta.
+
+Na primeira instalação, execute:
+
+Copy-Item .env.example .env
+
+Abra o arquivo .env e substitua o valor de SERVICE_KEY por uma chave de sua escolha com pelo menos 32 caracteres, sem espaços. Se o .env já estiver configurado, não precisa fazer isso de novo.
+
+Para instalar as bibliotecas da API e criar o banco:
+
+cd api_tarefas
+npm install
+npm run generate
+npm run banco
+cd ..
+
+Para instalar as bibliotecas do serviço de logs:
+
+cd servico_logs
+composer install
+cd ..
+
+Para instalar as bibliotecas do analisador:
+
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r analisador\requirements.txt
+
+Depois da instalação, abra três terminais separados na pasta principal do projeto.
+
+No primeiro terminal, execute:
+
+php -S 127.0.0.1:8000 -t servico_logs servico_logs/main.php
+
+No segundo terminal, execute:
+
+cd api_tarefas
+npm start
+
+No terceiro terminal, execute:
+
+.\.venv\Scripts\python.exe -m uvicorn main:app --app-dir analisador --host 127.0.0.1 --port 8001
+
+Deixe os três terminais abertos e acesse http://localhost:3001 no navegador.
+
+Cadastre um usuário e faça login. Não precisa usar Live Server.
