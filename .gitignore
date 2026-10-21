@@ -1,0 +1,8 @@
+node_modules/
+vendor/
+.venv/
+__pycache__/
+*.db
+*.db-journal
+.env
+*.zip
